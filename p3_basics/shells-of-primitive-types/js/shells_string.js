@@ -15,6 +15,7 @@ log("ECMAScipt5 only " + stringValue[0]);
 
 var val = "hello ";
 var result = val.concat("world");
+// Original string is not changed!
 log(val);
 log(result);
 
