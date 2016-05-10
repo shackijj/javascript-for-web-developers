@@ -46,8 +46,8 @@
   <!-- <script src="js/oop_combination_inheritance.js"></script> -->
   <!--  <script src="js/oop_prototype.js"></script> -->
   <!-- <script src="js/oop_prototypal_inheritance.js"></script> -->
-  <!--  <script src="js/oop_parasitic_inheritance.js"></script> -->
-   <script src="js/oop_parasitic_combined_inheritance.js"></script>
+  <!--  <script src="js/oop_parasite_inheritance.js"></script> -->
+   <script src="js/oop_parasital_combined_inheritance.js"></script>
    
 </body>
 </html>
