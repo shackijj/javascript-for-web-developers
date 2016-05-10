@@ -4,6 +4,21 @@ var leftPos = (typeof window.screenLeft == "number") ?
 					window.screenLeft : window.screenX;
 var topPos = (typeof window.screenRight == "number") ?
 					window.screenRight : window.screenY;
+
+var pageWidth = window.innerHeight,
+	pageHeight = window.innerHeight;
+
+if (typeof pageWidth !== "number") {
+	if (document.compatMode == "CSS1Compat") {
+		pageWidth = document.documentElement.clientWidth;
+		pageHeight = document.documentElement.clientHeight;
+	} else {
+		pageWidth = document.body.clientWidth;
+		pageHeight = document.body.clientHeight;
+	}
+}
+
+console.log("PageWidth: " + pageWidth + " PageHeight: " + pageHeight);
 console.log("leftPos: " + leftPos + " topPos: " + topPos );
 
 var winForMove = window.open('move_me.html', 'winForMove', 'left=100,top=100,width=200,height=200,location=no');
