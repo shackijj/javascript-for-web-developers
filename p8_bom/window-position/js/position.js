@@ -21,7 +21,19 @@ if (typeof pageWidth !== "number") {
 console.log("PageWidth: " + pageWidth + " PageHeight: " + pageHeight);
 console.log("leftPos: " + leftPos + " topPos: " + topPos );
 
-var winForMove = window.open('move_me.html', 'winForMove', 'left=100,top=100,width=200,height=200,location=no');
+var blocked = false;
+try {
+	var winForMove = window.open('move_me.html', 'winForMove', 'left=100,top=100,width=200,height=200,location=no');
+	if(winForMove == null) {
+		blocked = true;
+	}
+} catch(ex) {
+	blocked = true;
+}
+
+if (blocked) {
+	alert("The popup was blocked");
+}
 
 function moveToFunction () {	
 	var inputs = this.form.elements,
