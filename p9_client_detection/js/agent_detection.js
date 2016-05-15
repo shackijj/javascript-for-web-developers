@@ -20,6 +20,23 @@ var client = function () {
 		ver: null
 	};
 	
+	var system = {
+		win: false,
+		mac: false,
+		x11: false,
+		// mobiles
+		iphone: false,
+		ipod: false,
+		ipad: false,
+		ios: false,
+		android: false,
+		nokiaN: false,
+		winMobile: false,
+		// game platforms
+		wii: false,
+		ps: false
+	};
+	
 	// Code
 	
 	// Let's start with Opera
@@ -65,7 +82,7 @@ var client = function () {
 		
 		if(/Firefox\/(\S+)/.test(ua)) {
 			browser.ver = RegExp["$1"];
-			browser.firefox = pareseInt(browser.ver);
+			browser.firefox = parseInt(browser.ver);
 		}
 		
 	} else if (/MSIE ([^;]+)/.test(ua) || /Trident.*rv:([^\);]+)/.test(ua)) {
@@ -73,9 +90,73 @@ var client = function () {
 		engine.ie = browser.ie = parseFloat(engine.ver);
 	}
 	
+	var p = navigator.platform;
+	system.win = p.indexOf("Win") == 0;
+	system.mac = p.indexOf("Mac") == 0;
+	system.x11 = (p.indexOf("X11") == 0) || (p.indexOf("Linux") == 0);
+	
+	if (system.win) {
+		if(/Win(?:dows)?\s?([^do]{2})\s?(\d+\.\d+)?/.test(ua)) {
+			if(RegExp["$1"] == "NT") {
+				switch(RegExp["$2"]) {
+					case "5.0":
+						system.win = "2000";
+						break;
+					case "5.1":
+						system.win = "XP";
+						break;
+					case "6.0":
+						system.win = "Vista";
+						break;
+					case "6.1":
+						system.win = "7";
+						break
+					default:
+						system.win = "NT";
+						break;
+				}
+			} else if (RegExp["$1"] == "9x") {
+				system.win = "ME";
+			} else {
+				system.win = RegExp["$1"];
+			}
+		}
+	}
+
+	if (system.win == "CE") {
+		system.winMobile = system.win;
+	} else if (system.win == "Ph") {
+		if (/Windows Phone OS (\d+\.\d+)/.test(ua)) {
+			system.win = "Phone";
+			system.winMobile = parseFloat(RegExp["$1"]);
+		}
+	}
+	
+	system.iphone = ua.indexOf("iPhone") > -1;
+	system.ipad = ua.indexOf("iPad") > -1;
+	system.ipod = ua.indexOf("iPod") > -1;
+	
+	if (system.mac && ua.indexOf("Mobile")) {
+		if (/CPU (?:iPhone )?OS (\d+_\d+)/.test(ua)) {
+			system.ios = parseFloat(RegExp["$1"].replace("_", "."));
+		} else {
+			system.ios = 2;
+		}
+	}
+	
+	if (/Android  (\d+\.\d+)/.test(ua)) {
+		system.android = parseFloat(RegExp["$1"]);
+	}
+	
+	system.nokiaN = ua.indexOf("NokiaN") > -1;
+
+	system.wii = ua.indexOf("Wii") > -1;
+	system.ps = /playstation/i.test(ua);
+	
 	return {
 		engine : engine,
-		browser: browser
+		browser: browser,
+		system: system
 	};
 	
 }();
