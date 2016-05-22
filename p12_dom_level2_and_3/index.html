@@ -9,6 +9,7 @@
   <style type="text/css">
 	header, section, footer, aside, nav, article, figure, audio, video, canvas  { display:block; }
   </style>
+  <link href="index.css" rel="stylesheet">
 </head>
 <body>
   <div id="wrapper">
@@ -18,6 +19,13 @@
 	<nav>
 	  Nav
 	</nav>
+	<style>
+	#content {
+		background-color: green;
+		font-size: 13px;
+		width: 250px;
+	}
+	</style>
 	<section id="content">
 	  <article>
 		Article
@@ -26,13 +34,38 @@
 	<aside>
 	  Sidebar
 	</aside>
+	<style>
+		#scrollable-container {
+			width: 200px;
+			height: 200px;
+			border: 1px solid black;
+			overflow: scroll;
+		}
+		#scrollable {
+			width: 500px;
+			height: 500px;
+			background-color: silver;
+		}
+	</style>
+	<div id="scrollable-container">
+		<div id="scrollable">
+			<span>Scrollable</span>
+		</div>
+	</div>
+	<p id="p1"><b>Hello</b> world!</p>
+	<p id="p2">Yayaye <b>Kokojambo</b> Yeeee</p>
 	<footer>
 	  Footer
 	</footer>
-	<iframe id="myIframe" src="xhtml_example.html"></iframe>
+	<!-- <iframe id="myIframe" src="xhtml_example.html"></iframe> -->
   </div>
   <script src="js/index.js"></script>
+  <script src="js/agent_detection.js"></script>
   <!-- <script src="js/views_and_html.js"></script> -->
-  <script src="js/styles.js"></script>
+  <!-- <script src="js/styles.js"></script> -->
+  <!-- <script src="js/css.js"></script> -->
+  <!-- <script src="js/element_size.js"></script> -->
+  <script src="js/traversal.js"></script>
+  <script src="js/traversal_2.js"></script>
 </body>
 </html>
