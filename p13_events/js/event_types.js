@@ -34,7 +34,7 @@ EventUtil.addHandler(window, "load", function() {
     document.body.appendChild(script);
 });
 
-// UNLOAD EVENT
+
 // Doesn't work in chrome and firefox on linux
 EventUtil.addHandler(window, "unload", function() {
     alert("Document unloaded!");
@@ -42,4 +42,14 @@ EventUtil.addHandler(window, "unload", function() {
 
 EventUtil.addHandler(window, "resize", function(event) {
     log("Resized");
+});
+
+// Doesn't work in firefox on linux
+EventUtil.addHandler(window, "scroll", function(event) {
+    if (document.compatMode == "CSS1Compat") {
+        log(document.documentElement.scrollTop);
+    } else {
+        // this work
+        log(document.body.scrollTop);
+    }
 });
