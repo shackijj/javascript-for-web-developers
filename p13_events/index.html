@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>HTML5 skeleton</title>
+  <!--[if lt IE 9]>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <style type="text/css">
+	header, section, footer, aside, nav, article, figure, audio, video, canvas  { display:block; }
+  </style>
+</head>
+<body>
+  <div id="wrapper">
+	<header>
+	  Header
+	</header>
+	<nav>
+	  Nav
+	</nav>
+	<section id="content">
+	  <article>
+		Article
+	  </article>
+	</section>
+	<aside>
+	  Sidebar
+	</aside>
+	<footer>
+	  Footer
+	</footer>
+	<form id="myForm">
+		<input type="text" name="myText">
+		<!-- Actually it's a bad example because the JS code 
+		in html creates dependencies -->
+		<input type="button" value="click me" onclick="log(myText.value)">
+		<input type="button" value="clicke me js" id="clickMe">
+	</form>
+  </div>
+  <script src="js/index.js"></script>
+  <!-- <script src="js/event_handlers.js"></script> -->
+  <script src="js/event_utils.js"></script>
+</body>
+</html>
