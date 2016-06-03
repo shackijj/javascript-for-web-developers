@@ -24,6 +24,7 @@
 		Article
 	  </article>
 	</section>
+    <div id="myDiv" style="width: 200px; height: 200px; background-color: silver;"> </div>
 	<aside>
 	  Sidebar
 	</aside>
@@ -37,10 +38,19 @@
 		in html creates dependencies -->
 		<input type="button" value="click me" onclick="log(myText.value)">
 		<input type="button" value="clicke me js" id="clickMe">
+        <textarea id="myText"></textarea>
 	</form>
   </div>
+  <ul id="deleteMe">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+  </ul>
   <script src="js/index.js"></script>
   <!-- <script src="js/event_handlers.js"></script> -->
-  <script src="js/event_utils.js"></script>
+  <script src="js/event_util.js"></script>
+  <!-- <script src="js/mouse_events.js"></script> -->
+  <!-- <script src="js/keyboard_events.js"></script> -->
+  <script src="js/dom_events.js"></script>
 </body>
 </html>
