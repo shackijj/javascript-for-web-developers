@@ -12,7 +12,7 @@ var EventUtil = {
 
     removeHandler: function(element, type, handler) {
         if (element.removeEventListener) {
-            element.removeElementListener(type, handler);
+            element.removeEventListener(type, handler);
         } else if (element.detachEvent) {
             element.detachHandler("on" + type);
         } else {
