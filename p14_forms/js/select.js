@@ -16,7 +16,20 @@ log_header("Select");
         return result;
     }
 
-    var selectbox = document.getElementById("selectForm");
+    var selectbox = document.getElementById("selLocation");
+    var selectMultipleBox = document.getElementById("selMultipleLocation");
+
+    var newOption = document.createElement("option");
+    newOption.appendChild(document.createTextNode("Option Text"));
+    newOption.setAttribute("value", "Kokojambo");
+    selectbox.appendChild(newOption);
+
+    // Move an option from one select to another.
+    selectMultipleBox.appendChild(newOption);
+
+    // Change an option's position in select
+    selectMultipleBox.insertBefore(newOption,
+        selectMultipleBox.options[newOption.index-1]);
 
     EventUtil.addHandler(selectbox, "change", function(event) {
         event = EventUtil.getEvent(event);
@@ -28,8 +41,6 @@ log_header("Select");
             log("selectForm text: " + text + " value: " + value);
         }
     });
-
-    var selectMultipleBox = document.getElementById("selectMultipleForm");
 
     EventUtil.addHandler(selectMultipleBox, "change", function(event) {
         event = EventUtil.getEvent(event);
@@ -46,5 +57,4 @@ log_header("Select");
 
         log(message);
     });
-
 })();
