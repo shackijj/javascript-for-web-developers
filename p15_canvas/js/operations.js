@@ -19,6 +19,17 @@ if (rectDrawing.getContext) {
 
     context.strokeRect(90, 10, 50, 50);
     context.strokeRect(110, 30, 50, 50);
+    
+    var fontSize = 100;
+    context.font = fontSize + " px Arial";
+
+    while (context.measureText("Hello World!").width > 140) {
+        fontSize--;
+        context.font = fontSize + " px Arial";
+    }
+
+    context.fillText("Hello world!", 10, 10);
+    context.fillText("Font size is " + fontSize + " px", 10, 50);
 }
 
 var clockDrawing = document.getElementById("clockDrawing");
@@ -39,10 +50,11 @@ if (clockDrawing.getContext) {
     context.moveTo(100, 100);
     context.lineTo(35, 100);
 
-
+    context.font = "bold 14px Arial";
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+    context.fillText("12", 100, 20);
 
 
     context.stroke();
-
-
 }
