@@ -1,0 +1,50 @@
+.game {
+    width: 300px;
+    list-style-type: none;
+    display: block;
+}
+
+.game-piece {
+    background-image: url(img/van_gogh.jpg);
+    background-repeat: no-repeat;
+    display: block;
+    float: left;
+    width: 100px;
+    height: 100px;
+}
+
+.game-piece_1piece {
+    background-position: 0px 0px;
+}
+
+.game-piece_2piece {
+    background-position: -100px 0px;
+}
+
+.game-piece_3piece {
+    background-position: -200px 0px;
+}
+
+.game-piece_4piece {
+    background-position: 0px -100px;
+}
+
+.game-piece_5piece {
+    background-position: -100px -100px;
+}
+
+.game-piece_6piece {
+    background-position: -200px -100px;
+}
+
+.game-piece_7piece {
+    background-position: 0px -200px;
+}
+
+.game-piece_8piece {
+    background-position: -100px -200px;
+}
+
+.game-piece_9piece {
+    background-position: -200px -200px;
+}
