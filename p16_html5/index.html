@@ -30,10 +30,24 @@
 			<li class="game-piece"></li>
 			<li class="game-piece"></li>
 		</ul>
+		<div class="mediaplayer" style="clear: both">
+			<h3>Video player</h3>
+			<video id="mediaplayer-player" width="300" heigth="300">
+				<source src="media/small.mp4" type="video/mp4">
+				Video is not availiable.
+			</video>
+			<div class="mediaplayer-controls">
+				<button id="controls-play">Play</button>
+				<span id="controls-curtime">0</span>
+				<span id="controls-duration">0</span>
+			</div>
+		</div>
   </div>
   <script src="js/index.js"></script>
 	<script src="js/event_util.js"></script>
 	<script src="js/xdm.js"></script>
 	<script src="js/drag_and_drop.js"></script>
+	<script src="js/mediaplayer.js"></script>
+	<script src="js/history.js"></script>
 </body>
 </html>

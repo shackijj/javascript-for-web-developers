@@ -2,7 +2,6 @@ log_header("drag_and_drop.js");
 
 (function() {
     function DDGame (id, pieces) {
-        var i;
         this.gameId = id;
         this.numPieces = pieces;
         this.arrPieces = null;
@@ -46,14 +45,21 @@ log_header("drag_and_drop.js");
     }
 
     DDGame.prototype.initNumberArray = function (number) {
-        var array = [];
-        for(i = 0; i < number; i++) {
-            array[i] = i + 1;
+        if (typeof number == "number") {
+            var array = [];
+            for(i = 0; i < number; i++) {
+                array[i] = i + 1;
+            }
+            return array;
+        } else {
+            throw new Error("DDGame.prototype.initNumberArray: argument must be a number");
         }
-        return array;
     }
 
     DDGame.prototype.shuffleArray = function (array) {
+        if (!(array instanceof Array)) {
+            throw new Error("DDGame.prototype.shuffleArray: argument must be an array");
+        }
         var m = array.length, t, i;
 
         while (m) {
@@ -145,7 +151,8 @@ log_header("drag_and_drop.js");
 
         if (event.dataTransfer) {
             event.dataTransfer.setData("text", target.dataset.piece);
-            // log("Drag started on " + target.dataset.piece);
+            // It shoulde be configurable
+            event.dataTransfer.setDragImage(target, 50, 50);
         }
 
     };

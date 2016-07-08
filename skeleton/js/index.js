@@ -6,3 +6,9 @@ function log_header(name) {
 function log(msg) {
     console.log(msg);
 }
+
+function assert(condition, msg) {
+    if (!condition) {
+        throw new Error(msg);
+    }
+}
