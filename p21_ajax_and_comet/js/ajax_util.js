@@ -43,7 +43,6 @@ var AjaxUtil = {
 
         for (i=0, len=form.elements.length; i < len; i++) {
             field = form.elements[i];
-
             switch(field.type) {
                 case "select-one":
                 case "select-multiple":
@@ -84,8 +83,8 @@ var AjaxUtil = {
                             encodeURIComponent(field.value));
                     }
             }
-            return parts.join("&");
         }
+        return parts.join("&");
     },
 
     postFormData : function(form, url) {
@@ -104,7 +103,7 @@ var AjaxUtil = {
         };
 
         xhr.open("post", url, true);
-        xhr.setRequestHeader("Content-Type", "x-www-formurlencoded");
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.send(this.serializeForm(form));
     }
 };
