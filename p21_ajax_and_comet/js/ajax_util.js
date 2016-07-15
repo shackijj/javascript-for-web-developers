@@ -105,5 +105,44 @@ var AjaxUtil = {
         xhr.open("post", url, true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.send(this.serializeForm(form));
+    },
+    /* xhr props are: abort(), onerror, onload, responseText, send */
+    createCORSRequest: function (method, url) {
+        var xhr = new XMLHttpRequest();
+
+        if ("withCredentials" in xhr) {
+            xhr.open(method, url, true);
+        } else if (typeof XDomailRequest != "undefined") {
+            // IE
+            xhr = new XDomailRequest();
+            xhr.open(method, url);
+        } else {
+            xhr = null;
+        }
+
+        return xhr;
+    },
+
+    createStreamingClient: function (url, progress, finished) {
+        var xhr = new XMLHttpRequest(),
+            received = 0;
+        
+        xhr.open("get", url, true);
+
+        xhr.onreadystatechange = function() {
+            var result;
+
+            if (xhr.readyState == 3) {
+                result = xhr.responseText.substring(received);
+                received += result.length;
+
+                progress(result);
+            } else if (xhr.readyState == 4) {
+                finished(xhr.responseText);
+            }
+        };
+
+        xhr.send(null);
+        return xhr;
     }
 };
