@@ -114,7 +114,7 @@ var AjaxUtil = {
             xhr.open(method, url, true);
         } else if (typeof XDomailRequest != "undefined") {
             // IE
-            xhr = new XDomailRequest();
+            xhr = new XDomainRequest();
             xhr.open(method, url);
         } else {
             xhr = null;
