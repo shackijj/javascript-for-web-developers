@@ -51,7 +51,14 @@ var SubCookieUtil = {
     // name=name1=value1;
 
     get: function(name, subName) {
+        var rc = null,
+            all = this.getAll(name);
 
+        if (all.hasOwnProperty(subName)) {
+            rc = all[subName];
+        }
+
+        return rc;
     },
 
     getAll: function(name) {
@@ -63,42 +70,85 @@ var SubCookieUtil = {
             subCookieText,
             keyValue;
 
-            if (cookieStart > -1) {
-                cookieEnd = document.cookie.indexOf(";", cookieStart);
+ 
+        if (cookieStart > -1) {
+            cookieEnd = document.cookie.indexOf(";", cookieStart);
 
-                if (cookieEnd == -1) {
-                    cookieEnd = document.cookie.length;
-                }
-
-                subCookieText = decodeURIComponent(document.cookie.substring(
-                    cookieStart + cookieName, cookieEnd));
-
-                var values = subCookieText.split("&");
-
-                for (var i = 0, len = values.length; i < len; i++) {
-                    keyValue = values[i].split("=");
-                    // DO THIS NEXT TIME
-                }
+            if (cookieEnd == -1) {
+                cookieEnd = document.cookie.length;
             }
 
+            subCookieText = decodeURIComponent(document.cookie.substring(
+                cookieStart + cookieName.length, cookieEnd));
+            
+            var values = subCookieText.split("&");
+
+            for (var i = 0, len = values.length; i < len; i++) {
+                keyValue = values[i].split("=");
+                subCookieValues[keyValue[0]] = keyValue[1];
+            }
+        }
         return subCookieValues;
 
     },
 
     set: function(name, subName, value, expires, path, domain, secure) {
+        var all = this.getAll(name);
+        
+        all[subName] = value;
 
+        this.setAll(name, all, value, expires, path, domain, secure);
     },
 
     setAll: function(name, subcookies, expires, path, domain, secure) {
+        var cookieValue = encodeURIComponent(name) + "=",
+            subCookieText = "",
+            key, value;
 
+        for (key in subcookies) {
+            if (key.length > 0 && subcookies.hasOwnProperty(key)) {
+                if (subCookieText !== "") {
+                    subCookieText += "&";
+                }
+
+                subCookieText += key + "=" + subcookies[key];
+            }
+        }
+
+        if (subCookieText.length > 0) {
+            cookieValue = cookieValue + encodeURIComponent(subCookieText);
+        }
+
+        if (expires instanceof Date) {
+            cookieValue += "; expires=" + expires.toGMTString();
+        }
+
+        if (path) {
+            cookieValue += "; path=" + path;
+        }
+
+        if (domain) {
+            cookieValue += "; domain=" + domain;
+        }
+
+        if (secure) {
+            cookieValue += "; secure";
+        }
+
+        document.cookie = cookieValue;
     },
 
-    unset: function(name, subName) {
-
+    unset: function(name, subName, path, domain, secure) {
+        var all = this.getAll(name);
+        
+        if (all.hasOwnProperty(subName)) {
+            delete all[subName];
+            this.setAll(name, all, null, path, domain, secure);
+        }
     },
 
-    unsetAll: function(name) {
-
+    unsetAll: function(name, path, domain, secure) {
+        this.setAll(name, {}, new Date(0), path, domain, secure);
     }
 
 };
