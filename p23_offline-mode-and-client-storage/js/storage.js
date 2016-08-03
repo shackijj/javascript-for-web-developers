@@ -58,7 +58,7 @@ var IDBApp = (function() {
             }
         ], 
         name = "idb-app",
-        version = 4,
+        version = 5,
         db;
 
     return {
@@ -90,6 +90,7 @@ var IDBApp = (function() {
                     //
                 }
                 storage = db.createObjectStore("users", { keyPath: "username" });
+                storage.createIndex("lastName", "lastName", {unique: true});
 
                 while(i < len) {
                     request = storage.add(users[i++]);
@@ -186,13 +187,98 @@ var IDBApp = (function() {
             }
 
             var transaction = db.transaction("users"),
-                store = db.objectStore("users"),
+                store = transaction.objectStore("users"),
                 request = store.openCursor();
 
             request.onsuccess = function(event) {
-                var cursor = event.target.result;
+                var cursor = event.target.result,
+                    value;
+
+                if (cursor) {
+                    value = cursor.value;
+                    log("User name: " + value.firstName + " lastname: " + value.lastName);
+                    cursor.continue();
+                }
+            };
+        },
+
+        deleteUser: function(key) {
+            if (!db) {
+                log("DB is not opened");
+                return;
+            }
+
+            var transaction = db.transaction("users", "readwrite"),
+                range = IDBKeyRange.only(key);
+                store = transaction.objectStore("users"),
+                request = store.openCursor(range);
+
+            request.onsuccess = function(event) {
+                var cursor = event.target.result(),
+                    value,
+                    deleteRequest;
+
+                if (cursor && cursor.key === key) {
+                    deleteRequest = cursor.delete();
+
+                    deleteRequest.onsuccess = function() {};
+                    deleteRequest.onerror = function() {};
+                }
+            }
+        },
+
+        showUserByLastName: function(lastName) {
+            var transaction = db.transaction("users"),
+                store = transaction.objectStore("users"),
+                index = store.index("lastName"),
+                range = IDBKeyRange.only(lastName),
+                request = index.openCursor();
+
+            request.onsuccess = function(event) {
+                var cursor = event.target.result,
+                    value;
+                
+                if (cursor) {
+                    if (cursor.key == lastName) {
+                        value = cursor.value;
+                        log(JSON.stringify(value));
+                    }
+                }
+            }
+        },
+
+        showUsersByIDBKey: function(idbKey) {
+
+            var transaction = db.transaction("users"),
+                store = transaction.objectStore("users"),
+                request;
+
+            if (!db) {
+                log("DB is not opened");
+                return;
+            }
+
+            if (! idbKey instanceof IDBKeyRange) {
+                throw {
+                    name: "showUsersByIDBKey",
+                    message: "idbKey is not instanceof IDBKeyRange"
+                };
+            }
+
+            request = store.openCursor(idbKey);
+            request.onsuccess = function(event) {
+                var cursor = event.target.result,
+                    value;
+
+                if (cursor) {
+                    value = cursor.value;
+                    log("User name: " + value.firstName + " lastname: " + value.lastName);
+
+                    cursor.continue();
+                }
             };
         }
     };
+
 
 }());
