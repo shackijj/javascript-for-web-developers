@@ -12,6 +12,12 @@
 		background-color: red;
 		height: 100px;
 	}
+
+	#droptarget {
+		background-color: green;
+		height: 200px;
+		width: 200px;
+	}
   </style>
 </head>
 <body>
@@ -21,25 +27,11 @@
 		First file: <input type="file" />
 		Second file:<input type="file" />
 	</form>
-  <div id="wrapper">
-		<header>
-			Header
-		</header>
-		<nav>
-			Nav
-		</nav>
-		<section id="content">
-			<article>
-			Article
-			</article>
-		</section>
-		<aside>
-			Sidebar
-		</aside>
-		<footer>
-			Footer
-		</footer>
-  </div>
+	<div id="output">
+	</div>
+	<div id="progress">
+	</div>
+	<div id="droptarget"></div>
   <script src="js/index.js"></script>
 	<script src="js/event_util.js"></script>
 	<script src="js/operations.js"></script>
