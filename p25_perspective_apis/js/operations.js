@@ -194,7 +194,7 @@
     function handleEvent(event) {
         var info = "",
             output = document.getElementById("output"),
-            files, len, i;
+            files, len, i, data, xhr;
 
         EventUtil.preventDefault(event);
 
@@ -202,12 +202,24 @@
             files = event.dataTransfer.files;
             i = 0;
             len = files.length;
+            data = new FormData();
 
             while (i < len) {
                 info += files[i].name + " (" + files[i].type + ", " +
                         files[i].size + " B)<br>";
+                data.append("file" + i, files[i]);
                 i++;
             }
+
+            xhr = new XMLHttpRequest();
+            xhr.open("post", "/p25_perspective_apis/file_upload.php", true);
+            
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    log(xhr.responseText);
+                }
+            };
+            xhr.send(data);
 
             output.innerHTML = info;
         }
@@ -216,5 +228,22 @@
     EventUtil.addHandler(droptarget, "dragenter", handleEvent);
     EventUtil.addHandler(droptarget, "dragover", handleEvent);
     EventUtil.addHandler(droptarget, "drop", handleEvent);
+
+}());
+
+(function() {
+    var data = [123, 23, 1, 123, 1],
+        worker = new Worker('js/worker_code.js');
+
+    worker.onmessage = function(event) {
+        var data = event.data;
+
+        log("Data from worker: ");
+        log(data);
+        log("End of data from worker");
+
+    };
+
+    worker.postMessage(data);
 
 }());
