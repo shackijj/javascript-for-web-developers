@@ -1,3 +1,4 @@
+
 log_header("Functions.js");
 
 (function() {
@@ -208,4 +209,72 @@ assert(isArray([1,2]) === true, "Oops, Wrong type detections");
     assert(delete freezedPerson.name === false, "freezed obj's props cant be deleted");
     freezedPerson.name = "Greg";
     assert(freezedPerson.name === "Nicholas", "freezed obj can't be changed");
+}());
+
+(function() {
+    // Repeating Timer
+
+    setTimeout(function() {
+        var div = document.getElementById('flying-div'),
+            left = parseInt(div.style.left) + 5;
+            
+            if (left < 200) {
+                div.style.left = left + "px";
+                setTimeout(arguments.callee, 30);
+            }
+    }, 30);
+
+    // data chunking
+
+    function chunk(array, process, context) {
+        setTimeout(function() {
+            var item = array.shift();
+            process.call(context, item);
+
+            if (array.length > 0) {
+                setTimeout(arguments.callee, 100);
+            }
+        }, 100);
+    }
+
+    var data = [1, 2, 3, 4 , 5];
+
+    function printValue(item) {
+        var div = document.getElementById('flying-div');
+        div.innerHTML += item + "<br>";
+    }
+
+    chunk(data, printValue);
+
+}());
+
+(function () {
+
+    function throttle(method, context) {
+        clearTimeout(method.tId);
+
+        method.tId = setTimeout(function() {
+            method.call(context);
+        }, 100);
+    }
+
+    var processor = {
+        timeoutId: null,
+
+        performProcessing: function() {
+            log(window.innerHeight + "x" + window.innerWidth);
+        },
+
+        process: function() {
+            clearTimeout(this.timeoutId);
+
+            var that = this;
+
+            this.timeoutId = setTimeout(function() {
+                that.performProcessing();
+            }, 100);
+        }
+    };
+
+    // EventUtil.addHandler(window, "resize", processor.process.bind(processor));
 }());
